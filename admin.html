@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전주독서대전</title>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src='./js/bootstrap.min.js'></script>
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <!-- 헤더 영역 -->
+    <header>
+        <div class="container d-flex justify-content-between align-items-center h-100">
+            <img src="./images/logo.svg" alt="전주독서대전" height="60">
+            <div class="nav d-none d-lg-flex">
+                <div class="nav__item">
+                    <a href="#">전주독서대전</a>
+                    <div class="nav__list">
+                        <a href="#">대전소개</a>
+                        <a href="#">회원가입/로그인</a>
+                        <a href="overview.html">행사개요</a>
+                    </div>
+                </div>
+                <div class="nav__item">
+                    <a href="#">온라인 책만들기</a>
+                </div>
+                <div class="nav__item">
+                    <a href="#">독자와의 만남</a>
+                    <div class="nav__list">
+                        <a href="#">예약하기</a>
+                        <a href="#">예약확인</a>
+                    </div>
+                </div>
+                <div class="nav__item">
+                    <a href="#">관리자 페이지</a>
+                    <div class="nav__list">
+                        <a href="#">행사등록</a>
+                        <a href="#">예약관리</a>
+                    </div>
+                </div>
+            </div>
+            <a href="/overview.html" class="btn btn-primary d-lg-none">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </header>
+    <!-- /헤더 영역 -->
+
+    <div class="container py-5">
+        <h3>관리자 페이지</h3>
+        <div id="search" class="my-3 p-3 d-flex justify-content-center align-items-center border mt-4">
+            <select class="form-control mr-2" style="width: 100px;">
+                <option value="category">장르</option>
+                <option value="writer">작가</option>
+            </select>
+            <input type="text" class="form-control mr-2" placeholder="검색어를 입력하세요">
+            <button class="btn btn-primary">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+        <div id="content" class="row mt-4">
+            <div class="col-lg-3">
+                <div class="bg-white border">
+                    <img src="./images/books/1.jpg" alt="책 이미지" class="fit-contain hx-300 p-3">
+                    <div class="p-3">
+                        <div>
+                            <strong>책 제목</strong>
+                            <span class="badge badge-primary ml-2">카테고리</span>
+                        </div>
+                        <div class="mt-2">
+                            <small>작가</small>
+                            <span class="ml-2">작가명</span>
+                        </div>
+                        <div class="mt-2">
+                            <small>출판사</small>
+                            <span class="ml-2">출판사명</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>에디터</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>책 제목</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>카테고리</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>작가</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>출판사</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>이미지</label>
+                        <input type="file" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer text-right">
+                    <button class="btn btn-primary">저장하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='./js/books.js'></script>
+    <script src="./js/admin.js"></script>
+    
+    <!-- 푸터 -->
+    <div class="bg-light">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="text-center">
+                        <img src="./images/logo.svg" alt="로고" height="50">
+                    </div>
+                </div>
+                <div class="col-lg-8 order-1 order-lg-0">
+                    <div class="text-center">
+                        <small class="d-block mb-2">(54819) 전주시 덕진구 솔내로 212(송천동2가 168-5) | 전화 : 063-281-6535 | 팩스 : 063-281-5286</small>
+                        <small class="d-block text-muted">Copyright 2020 전주독서대전. All rights reserved.</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 my-4 my-lg-0">
+                    <div class="text-center text-muted">
+                        <span class="p-1"><i class="fa fa-facebook"></i></span>
+                        <span class="p-1"><i class="fa fa-twitter"></i></span>
+                        <span class="p-1"><i class="fa fa-google-plus"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /푸터 -->
+</body>
+</html>
