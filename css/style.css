@@ -493,22 +493,29 @@ header {
     margin: 1em auto;
     overflow: hidden;
     position: relative;
-    width: 1140px;
-    height: 800px;
+    width: 1100px;
+    height: 1500px;
 }
-#wrap > canvas { position: relative; z-index: 1; }
-#content-video {
+.content-media {
     position: absolute;
-    width: 1040px;
-    height: 700px;
+    width: 1000px;
+    height: 1400px;
     left: 50px; top: 50px;
 }
-#content-video > video {
+.content-media > video,
+.content-media > img {
     object-fit: cover;
     width: 100%; height: 100%;
     user-select: none;
 }
-#content-video > .controls {
+
+.content-media__text {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content-media > .controls {
     position: absolute;
     left: 0; bottom: 0;
     width: 100%;
@@ -518,7 +525,7 @@ header {
     align-items: center;
     justify-content: space-between;
 }
-#content-video .controls button{
+.content-media .controls button{
     background-color: transparent;
     color: #fffd;
     border: none;
@@ -527,7 +534,7 @@ header {
     padding: 0.25em 0.5em;
     width: 100px;
 }
-#content-video .controls input {
+.content-media .controls input {
     margin-left: 1em;
     margin-right: 1em;
     width: calc(100% - 200px);

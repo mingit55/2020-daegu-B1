@@ -4,7 +4,7 @@ class App {
         this.$content = $("#content");
 
         this.keyword = "";
-        this.books = JSON.parse(JSON.stringify(books));
+        this.books = this.getBooks();
         
         this.render();
         this.setEvents();
@@ -17,6 +17,10 @@ class App {
         return this.$search.find("input").val();
     }
 
+    getBooks(){
+        return JSON.parse(JSON.stringify(books)).map((book, i) => ({id: i + 1, ...book}));
+    }
+
     render(){
         let viewList = this.books;
         
@@ -25,28 +29,29 @@ class App {
             viewList = viewList.filter(item => regex.test(item[this.searchType]));
         }
 
-        this.$content.html(viewList.map(item => `<div class="col-lg-3 mb-4" data-toggle="modal" data-target="#edit-modal">
-                <div class="bg-white border">
-                    <img src="/images/books/${item.image}" alt="책 이미지" class="fit-contain hx-300 p-3">
-                    <div class="p-3">
-                        <div>
-                            <strong>${item.name}</strong>
-                            <span class="badge badge-primary ml-2">${item.category}</span>
-                        </div>
-                        <div class="mt-2">
-                            <small>작가</small>
-                            <span class="ml-2">${item.writer}</span>
-                        </div>
-                        <div class="mt-2">
-                            <small>출판사</small>
-                            <span class="ml-2">${item.company}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>`).join(''));
+        this.$content.html(viewList.map(item => `<div class="book-item col-lg-3 mb-4" data-toggle="modal" data-target="#edit-modal" data-id="${item.id}">
+                                                    <div class="bg-white border">
+                                                        <img src="./images/books/${item.image}" alt="책 이미지" class="fit-contain hx-300 p-3">
+                                                        <div class="p-3">
+                                                            <div>
+                                                                <strong>${item.name}</strong>
+                                                                <span class="badge badge-primary ml-2">${item.category}</span>
+                                                            </div>
+                                                            <div class="mt-2">
+                                                                <small>작가</small>
+                                                                <span class="ml-2">${item.writer}</span>
+                                                            </div>
+                                                            <div class="mt-2">
+                                                                <small>출판사</small>
+                                                                <span class="ml-2">${item.company}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>`).join(''));
     }
 
     setEvents(){
+        // 검색
         this.$search.find("button").on("click", e => {
             this.keyword = this.searchText
                 .replace(/([.*+?^$\[\]\(\)\\\\\\/])/g ,"\\$1")
@@ -65,6 +70,12 @@ class App {
                 .replace(/ㅍ/, "[파-핗]")
                 .replace(/ㅎ/, "[하-힣]");
             this.render();
+        });
+        
+        // 에디터 띄우기
+        this.$content.on("click", ".book-item", e => {
+            let book = this.books.find(book => book.id == e.currentTarget.dataset.id);
+            this.editor = new Editor(book);
         });
     }
 }
