@@ -1,11 +1,3 @@
-import Line from "/js/editor/Line.js";
-import Rect from "/js/editor/Rect.js";
-import Circle from "/js/editor/Circle.js";
-import Triangle from "/js/editor/Triangle.js";
-import Text from "/js/editor/Text.js";
-import Eraser from "/js/editor/Eraser.js";
-import Page from "./editor/Page.js";
-
 class App {
     constructor(){
         this.canvas = document.querySelector("#content");
@@ -21,7 +13,10 @@ class App {
             eraser: new Eraser(this),
         };
 
-        this.pages = [ new Page(this), new Page(this), new Page(this) ];
+        let introImage = new Image();
+        introImage.src = "./images/intro.jpg";
+
+        this.pages = [ new Page(this, introImage), new Page(this), new Page(this) ];
         this.pageIdx = 0;
 
         this.render();
@@ -43,6 +38,18 @@ class App {
         return document.querySelector("#font-size").value;
     }
 
+    moveTo(pageIdx){
+        if(pageIdx < 0 || pageIdx >= this.pages.length) return false;
+        this.pageIdx = pageIdx;
+        
+        $("#wrap > :not(canvas)").remove();
+        if(this.page.video){
+            $("#wrap").append(this.page.video.$root);
+        }
+
+        $("#page-current").text(`페이지 ${this.pageIdx + 1}/${this.pages.length}`);
+    }
+
 
     render(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -55,7 +62,25 @@ class App {
     }
 
     setEvents(){
-        // 파일 선택
+        // 비디오 선택
+        $("#file-video").on("change", async e => {
+            if(e.target.files.length == 0) return false;
+            let file = e.target.files[0];
+
+            if(file.type.substr(0, 5) === "video"){
+                let url = await new Promise(res => {
+                    let reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        res(reader.result);
+                    };
+                });
+
+                this.page.setVideo(url);
+            }
+        });
+
+        // 이미지 선택
         $("#file-image").on("change", async e => {
             if(e.target.files.length == 0) return false;
             let file = e.target.files[0];
@@ -72,13 +97,31 @@ class App {
                 let image = await new Promise(res => {
                     let img = new Image();
                     img.src = url;
-                    img.onload = () => res(img);s
+                    img.onload = () => res(img);
                 });
 
                 this.page.setImage(image);
             }
         });
+    
 
+        // 페이지 생성
+        $("#page-create").on("click", e => {
+            this.pages.push(new Page(this));
+
+            this.moveTo(this.pageIdx);
+        });
+
+
+        // 페이지 이동
+        $("#page-prev").on("click", e => {
+            this.moveTo(this.pageIdx - 1);
+        });
+        $("#page-next").on("click", e => {
+            this.moveTo(this.pageIdx + 1);
+        });
+
+        // 도구 선택
         $(".tool").on("click", e => {
             $(".tool").removeClass("active");
             let name = e.currentTarget.dataset.name;
@@ -92,8 +135,8 @@ class App {
             }
         });
 
-        $(this.canvas).on("mousedown", e => {
-            if(this.tool && e.which == 1 && this.tool.onmousedown){
+        $(window).on("mousedown", e => {
+            if(e.target === this.canvas && this.tool && e.which == 1 && this.tool.onmousedown){
                 e.preventDefault();
                 this.tool.onmousedown(e);
             }

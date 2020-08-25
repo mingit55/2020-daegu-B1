@@ -1,4 +1,4 @@
-export default class Tool {
+class Tool {
     constructor(app){
         this.app = app;
         this.viewport = this.app.canvas;

@@ -1,11 +1,18 @@
-export default class Page {
-    constructor(app){
+class Page {
+    constructor(app, init = null){
         this.app = app;
         this.canvas = document.createElement("canvas");
         this.canvas.width = app.canvas.width;
         this.canvas.height = app.canvas.height;
 
         this.ctx = this.canvas.getContext("2d");
+        this.video = null;
+
+        if(init instanceof Image){
+            init.onload = () => {
+                this.setImage(init);
+            };
+        }
     }
 
     setImage(image){
@@ -26,6 +33,13 @@ export default class Page {
             y = (image.height - h) / 2;   
         }
 
-        this.ctx.drawImage(image, x, y, w, h, 0, 0, wantW, wantH);
+        this.ctx.drawImage(image, x, y, w, h, padding, padding, wantW, wantH);
+    }
+
+    setVideo(video){
+        this.video = new Video(video);
+
+        $("#wrap > :not(canvas)").remove();
+        $("#wrap").append(this.video.$root);
     }
 }
