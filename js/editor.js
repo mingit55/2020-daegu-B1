@@ -68,7 +68,7 @@ class App {
             }
         });
 
-        $(window).on("mousedown", e => {
+        $(this.canvas).on("mousedown", e => {
             if(this.tool && e.which == 1 && this.tool.onmousedown){
                 e.preventDefault();
                 this.tool.onmousedown(e);

@@ -10,7 +10,8 @@ export default class Rect extends Tool {
     onmousedown(e){
         let [x, y] = this.getXY(e);
 
-        this.ctx.fillStyle = this.app.fillStyle;
-        this.ctx.fillRect(x - this.size / 2, y - this.size / 2, this.size, this.size);
+        this.ctx.lineWidth = this.app.lineWidth;
+        this.ctx.strokeStyle = this.app.styleColor;
+        this.ctx.strokeRect(x - this.size / 2, y - this.size / 2, this.size, this.size);
     }
 }
