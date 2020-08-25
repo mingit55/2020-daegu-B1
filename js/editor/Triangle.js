@@ -35,6 +35,7 @@ export default class Triangle extends Tool {
         x = X + Math.cos( Math.PI * -90 / 180 ) * this.size;
         y = Y + Math.sin( Math.PI * -90 / 180 ) * this.size;
         this.ctx.lineTo(x, y);
+        this.ctx.closePath();
                
         this.ctx.stroke();
     }

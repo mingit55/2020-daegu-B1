@@ -55,6 +55,30 @@ class App {
     }
 
     setEvents(){
+        // 파일 선택
+        $("#file-image").on("change", async e => {
+            if(e.target.files.length == 0) return false;
+            let file = e.target.files[0];
+
+            if(file.type.substr(0, 5) === "image"){
+                let url = await new Promise(res => {
+                    let reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        res(reader.result);
+                    };
+                });
+
+                let image = await new Promise(res => {
+                    let img = new Image();
+                    img.src = url;
+                    img.onload = () => res(img);s
+                });
+
+                this.page.setImage(image);
+            }
+        });
+
         $(".tool").on("click", e => {
             $(".tool").removeClass("active");
             let name = e.currentTarget.dataset.name;
